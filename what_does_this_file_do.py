@@ -5,6 +5,8 @@ import os
 import openai
 
 from lib import auth
+from lib import constants
+from lib import types
 
 _MODEL = "gpt-3.5-turbo"
 
@@ -22,8 +24,12 @@ def ask_chatgpt_to_describe_file(filepath: str):
     user_message_content = f"What does the following code do? Be succinct.\n\n{file_contents}"
     response = openai.ChatCompletion.create(
         model=_MODEL,
-        messages=[{"role": "user", "content": user_message_content}],
-    )
+        messages=[
+            types.Message(
+                role=constants.ROLE_USER,
+                content=user_message_content,
+            ),
+        ])
     print(response["choices"][0]["message"]["content"].strip())
 
 if __name__ == "__main__":
