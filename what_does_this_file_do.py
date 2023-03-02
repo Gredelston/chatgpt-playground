@@ -7,14 +7,14 @@ import openai
 from lib import auth
 from lib import chatgpt
 from lib import constants
-from lib import display
+from lib import cli
 from lib import fs
 from lib import types
 
 
 def request_filepath() -> str:
-    print("\nEnter a filepath, and ChatGPT will tell you what that file does.")
-    return input("\n> ")
+    print("\nEnter a filepath. ChatGPT will tell you what that file does.\n")
+    return cli.prompt_user()
 
 
 def ask_chatgpt_to_describe_file(filepath: str):
@@ -24,7 +24,7 @@ def ask_chatgpt_to_describe_file(filepath: str):
     )
     user_message = types.Message(role=constants.ROLE_USER, content=user_message_content)
     response_message = chatgpt.send_message(user_message)
-    display.print_message(response_message)
+    cli.print_message(response_message)
 
 
 if __name__ == "__main__":
