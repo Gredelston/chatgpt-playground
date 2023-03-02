@@ -8,22 +8,17 @@ from lib import auth
 from lib import chatgpt
 from lib import constants
 from lib import display
+from lib import fs
 from lib import types
 
 
 def request_filepath() -> str:
-    print("Give me a filepath, and ChatGPT will tell you what that file does!")
-    filepath = input("> ")
-    return os.path.expanduser(filepath)
-
-
-def _get_file_contents(filepath: str) -> str:
-    with open(filepath) as f:
-        return "\n".join(f.readlines()).strip()
+    print("\nEnter a filepath, and ChatGPT will tell you what that file does.")
+    return input("\n> ")
 
 
 def ask_chatgpt_to_describe_file(filepath: str):
-    file_contents = _get_file_contents(filepath)
+    file_contents = fs.read_file(filepath)
     user_message_content = "\n".join(
         ("What does the following code do? Be succinct.", "", file_contents)
     )

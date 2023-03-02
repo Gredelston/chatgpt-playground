@@ -13,8 +13,6 @@ from lib import types
 
 
 class ChatSession:
-    _MODEL = "gpt-3.5-turbo"
-
     def __init__(self) -> None:
         self._message_history: list[types.Message] = []
 
