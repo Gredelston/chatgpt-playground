@@ -43,3 +43,9 @@ code, or have found a bug that needs fixing, please don't hesitate to submit a
 pull request.
 
 Happy coding!
+
+## Example Images
+
+![Example usage of `nira.py`, showing an interactive chat session.](./images/nira.png)
+
+![Example usage of `what_does_this_file_do.py`, showing ChatGPT describing what a local file does.](./images/what_does_this_file_do.png)
