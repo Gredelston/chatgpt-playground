@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
-import openai
 import os
 
-_MODEL = "gpt-3.5-turbo"
+import openai
 
-def _authenticate() -> None:
-    """Tell OpenAI about my secret key."""
-    with open("secret.txt") as f:
-        api_key = ''.join(f.readlines()).strip()
-    openai.api_key = api_key
+from lib import auth
+
+_MODEL = "gpt-3.5-turbo"
 
 def request_filepath() -> str:
     print("Give me a filepath, and ChatGPT will tell you what that file does!")
@@ -30,6 +27,6 @@ def ask_chatgpt_to_describe_file(filepath: str):
     print(response["choices"][0]["message"]["content"].strip())
 
 if __name__ == "__main__":
-    _authenticate()
+    auth.authenticate()
     filepath = request_filepath()
     ask_chatgpt_to_describe_file(filepath)
