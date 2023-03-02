@@ -5,10 +5,10 @@ import os
 import openai
 
 from lib import auth
+from lib import chatgpt
 from lib import constants
+from lib import display
 from lib import types
-
-_MODEL = "gpt-3.5-turbo"
 
 def request_filepath() -> str:
     print("Give me a filepath, and ChatGPT will tell you what that file does!")
@@ -21,16 +21,15 @@ def _get_file_contents(filepath: str) -> str:
 
 def ask_chatgpt_to_describe_file(filepath: str):
     file_contents = _get_file_contents(filepath)
-    user_message_content = f"What does the following code do? Be succinct.\n\n{file_contents}"
-    response = openai.ChatCompletion.create(
-        model=_MODEL,
-        messages=[
-            types.Message(
-                role=constants.ROLE_USER,
-                content=user_message_content,
-            ),
-        ])
-    print(response["choices"][0]["message"]["content"].strip())
+    user_message_content = '\n'.join((
+        "What does the following code do? Be succinct.",
+        "",
+        file_contents))
+    user_message = types.Message(
+        role=constants.ROLE_USER,
+        content=user_message_content)
+    response_message = chatgpt.send_message(user_message)
+    display.print_message(response_message)
 
 if __name__ == "__main__":
     auth.authenticate()
