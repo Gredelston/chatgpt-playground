@@ -6,6 +6,7 @@ from typing import Any, Optional
 import openai
 
 from lib import auth
+from lib import chatgpt
 from lib import constants
 from lib import display
 from lib import types
@@ -41,13 +42,9 @@ class ChatSession:
             role=constants.ROLE_USER,
             content=user_message_content)
         self._message_history.append(user_message)
-        response = openai.ChatCompletion.create(
-            model=self._MODEL,
-            messages=self._message_history,
-        )
-        assistant_message = types.Message(response.choices[0]["message"])
-        self._message_history.append(assistant_message)
-        display.print_message(types.Message(assistant_message))
+        response_message = chatgpt.send_messages(self._message_history)
+        self._message_history.append(response_message)
+        display.print_message(response_message)
     
     def loop(self) -> None:
         user_input = self.collect_input()
