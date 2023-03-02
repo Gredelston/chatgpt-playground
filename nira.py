@@ -33,6 +33,8 @@ class ChatSession:
 
     def loop(self) -> None:
         user_input = cli.prompt_user()
+        if not user_input:
+            return
         self.send_message(user_input)
         self.loop()
 
