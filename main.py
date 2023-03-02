@@ -5,12 +5,7 @@ from typing import Any, Optional
 
 import openai
 
-
-def _authenticate() -> None:
-    """Tell OpenAI about my secret key."""
-    with open("secret.txt") as f:
-        api_key = ''.join(f.readlines()).strip()
-    openai.api_key = api_key
+from lib import auth
 
 
 class ChatSession:
@@ -67,7 +62,7 @@ class ChatSession:
 
 
 def main() -> None:
-    _authenticate()
+    auth.authenticate()
     chat_session = ChatSession()
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     chat_session.add_system_instruction(f"You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nCurrent date: {today}")
