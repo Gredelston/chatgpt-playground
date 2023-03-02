@@ -6,6 +6,8 @@ from typing import Any, Optional
 import openai
 
 from lib import auth
+from lib import display
+from lib import types
 
 
 class ChatSession:
@@ -31,17 +33,6 @@ class ChatSession:
         else:
             print("Okay, we'll just fly by the seat of our pants.")
 
-    @staticmethod
-    def _display_message_content(message: dict[str, str]):
-        display_role = {
-            "user": "You",
-            "assistant": "My Cool AI",
-            "system": "The System",
-        }[message["role"]]
-        message_content = message["content"].strip()
-        #print(f"[{display_role}] {message_content}")
-        print(message_content)
-
     def send_message(self, user_message_content: str):
         user_message = {"role": "user", "content": user_message_content}
         self._message_history.append(user_message)
@@ -51,7 +42,7 @@ class ChatSession:
         )
         assistant_message = response.choices[0]["message"]
         self._message_history.append(assistant_message)
-        self._display_message_content(assistant_message)
+        display.print_message(types.Message(assistant_message))
     
     def loop(self) -> None:
         user_input = self.collect_input()
