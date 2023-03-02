@@ -59,7 +59,7 @@ def main() -> None:
     chat_session = ChatSession()
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     chat_session.add_system_instruction(
-        f"You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nCurrent date: {today}"
+        f"You are Nira, my personal robotic assistant. Answer as concisely as possible.\nCurrent date: {today}"
     )
     chat_session.loop()
 
