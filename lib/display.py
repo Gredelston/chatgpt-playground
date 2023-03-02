@@ -2,5 +2,6 @@
 
 from . import types
 
+
 def print_message(message: types.Message):
-    print('\n%s\n' % message["content"].strip())
+    print("\n%s\n" % message["content"].strip())

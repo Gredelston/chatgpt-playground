@@ -24,8 +24,8 @@ class ChatSession:
 
     def add_system_instruction(self, system_instruction: str):
         new_message = types.Message(
-            role=constants.ROLE_SYSTEM,
-            content=system_instruction)
+            role=constants.ROLE_SYSTEM, content=system_instruction
+        )
         self._message_history.append(new_message)
 
     def solicit_system_instruction(self) -> None:
@@ -39,13 +39,13 @@ class ChatSession:
 
     def send_message(self, user_message_content: str):
         user_message = types.Message(
-            role=constants.ROLE_USER,
-            content=user_message_content)
+            role=constants.ROLE_USER, content=user_message_content
+        )
         self._message_history.append(user_message)
         response_message = chatgpt.send_messages(self._message_history)
         self._message_history.append(response_message)
         display.print_message(response_message)
-    
+
     def loop(self) -> None:
         user_input = self.collect_input()
         if not user_input:
@@ -58,7 +58,9 @@ def main() -> None:
     auth.authenticate()
     chat_session = ChatSession()
     today = datetime.datetime.now().strftime("%Y-%m-%d")
-    chat_session.add_system_instruction(f"You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nCurrent date: {today}")
+    chat_session.add_system_instruction(
+        f"You are ChatGPT, a large language model trained by OpenAI. Answer as concisely as possible.\nCurrent date: {today}"
+    )
     chat_session.loop()
 
 
