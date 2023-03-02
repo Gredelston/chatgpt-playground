@@ -4,12 +4,9 @@ import os
 
 import openai
 
-from lib import auth
-from lib import chatgpt
-from lib import constants
 from lib import cli
 from lib import fs
-from lib import types
+from lib import session
 
 
 def request_filepath() -> str:
@@ -17,19 +14,18 @@ def request_filepath() -> str:
     return cli.prompt_user()
 
 
-def ask_chatgpt_to_describe_file(filepath: str):
+def main():
+    system_instruction = (
+        "You are an AI assistant that interprets code in a human-readable way."
+    )
+    chat_session = session.ChatSession(system_instruction=system_instruction)
+    filepath = request_filepath()
     file_contents = fs.read_file(filepath)
     user_message_content = "\n".join(
         ("What does the following code do? Be succinct.", "", file_contents)
     )
-    user_message = types.Message(
-        role=constants.ROLE_USER,
-        content=user_message_content)
-    response_message = chatgpt.send_message(user_message)
-    cli.print_message(response_message)
+    chat_session.ask(user_message_content)
 
 
 if __name__ == "__main__":
-    auth.authenticate()
-    filepath = request_filepath()
-    ask_chatgpt_to_describe_file(filepath)
+    main()
