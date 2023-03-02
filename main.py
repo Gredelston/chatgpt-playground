@@ -28,7 +28,7 @@ class ChatSession:
             content=system_instruction)
         self._message_history.append(new_message)
 
-    def solicit_system_instruction(self) -> str:
+    def solicit_system_instruction(self) -> None:
         print("What kind of bot would you like to chat with?")
         system_instruction = self.collect_input()
         if system_instruction:

@@ -10,7 +10,9 @@ def send_messages(messages: list[types.Message]) -> types.Message:
     response = openai.ChatCompletion.create(
         model=constants.CHATGPT_MODEL,
         messages=messages)
-    return types.Message(response["choices"][0]["message"])
+    return types.Message(
+        role=types.Role(response["choices"][0]["message"]["role"]),
+        content=response["choices"][0]["message"]["content"])
 
 def send_message(message: types.Message) -> types.Message:
     """Send a single message to ChatGPT, and return the response message.
