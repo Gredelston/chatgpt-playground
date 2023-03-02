@@ -7,6 +7,7 @@ import openai
 from lib import constants
 from lib import fs
 
+
 def authenticate() -> None:
     """Authenticate the OpenAI API with the locally saved secret key."""
     if not os.path.exists(constants.SECRET_FILEPATH):

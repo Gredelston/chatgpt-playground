@@ -22,7 +22,9 @@ def ask_chatgpt_to_describe_file(filepath: str):
     user_message_content = "\n".join(
         ("What does the following code do? Be succinct.", "", file_contents)
     )
-    user_message = types.Message(role=constants.ROLE_USER, content=user_message_content)
+    user_message = types.Message(
+        role=constants.ROLE_USER,
+        content=user_message_content)
     response_message = chatgpt.send_message(user_message)
     cli.print_message(response_message)
 
