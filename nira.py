@@ -28,15 +28,6 @@ class ChatSession:
         )
         self._message_history.append(new_message)
 
-    def solicit_system_instruction(self) -> None:
-        print("What kind of bot would you like to chat with?")
-        system_instruction = self.collect_input()
-        if system_instruction:
-            print("Sure, no problem.\n")
-            self.add_system_instruction(system_instruction)
-        else:
-            print("Okay, we'll just fly by the seat of our pants.")
-
     def send_message(self, user_message_content: str):
         user_message = types.Message(
             role=constants.ROLE_USER, content=user_message_content
