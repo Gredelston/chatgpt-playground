@@ -12,8 +12,9 @@ from lib import types
 class ChatSession:
     """A single chat session which tracks message history."""
 
-    def __init__(self, system_instruction: str = "") -> None:
+    def __init__(self, debug=False, system_instruction: str = "") -> None:
         """Initialize the session with an empty message history."""
+        self._debug = debug
         self._message_history: list[types.Message] = []
         auth.authenticate()
         if system_instruction:
@@ -52,11 +53,13 @@ class ChatSession:
         user_message = types.Message(role=constants.ROLE_USER, content=content)
         if with_history:
             self._append_message_to_history(user_message)
-            response_message = chatgpt.send_messages(self._message_history)
+            response_message = chatgpt.send_messages(
+                self._message_history, debug=self._debug
+            )
             self._append_message_to_history(response_message)
         else:
             response_message = chatgpt.send_messages(
-                self._get_system_messages() + [user_message]
+                self._get_system_messages() + [user_message], debug=self._debug
             )
         cli.print_message(response_message)
 
