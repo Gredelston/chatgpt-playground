@@ -12,8 +12,14 @@ from lib import types
 class ChatSession:
     """A single chat session which tracks message history."""
 
-    def __init__(self, debug=False, system_instruction: str = "") -> None:
-        """Initialize the session with an empty message history."""
+    def __init__(self, system_instruction: str = "", debug=False) -> None:
+        """Initialize the session with an empty message history.
+
+        Args:
+            debug: If True, print out additional debug information.
+            system_instruction: Additional instructions to give to ChatGPT as a
+                prefix before user interactions.
+        """
         self._debug = debug
         self._message_history: list[types.Message] = []
         auth.authenticate()
@@ -75,7 +81,7 @@ class ChatSession:
         self.ask(user_input, with_history=True)
         return True
 
-    def loop(self):
+    def loop(self) -> None:
         """Continually interact until the user stops."""
         if self.interact():
             self.loop()

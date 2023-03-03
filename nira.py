@@ -11,6 +11,7 @@ from lib import session
 
 
 def main(debug: bool = False) -> None:
+    """Create an interactive chat session with Nira, my assistant."""
     today = datetime.datetime.now().strftime("%Y-%m-%d")
     system_instruction = (
         "You are Nira, my personal robotic assistant. "

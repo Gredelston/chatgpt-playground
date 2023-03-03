@@ -9,7 +9,12 @@ from lib import types
 
 
 def send_messages(messages: list[types.Message], debug: bool = False) -> types.Message:
-    """Send a bunch of messages to ChatGPT, and return the response message."""
+    """Send a bunch of messages to ChatGPT, and return the response message.
+
+    Args:
+        messages: The full message history to send to ChatGPT.
+        debug: If true, print out the raw response from the ChatGPT API.
+    """
     response = openai.ChatCompletion.create(
         model=constants.CHATGPT_MODEL, messages=messages
     )
