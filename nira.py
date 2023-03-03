@@ -21,6 +21,7 @@ def main(debug: bool = False) -> None:
     chat_session = session.ChatSession(
         system_instruction=system_instruction, debug=debug
     )
+    chat_session.register_command("clear", chat_session.clear_history_except_system)
     chat_session.loop()
 
 

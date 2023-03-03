@@ -2,6 +2,8 @@
 
 """Library for a persistent chat session with history."""
 
+from typing import Any, Callable
+
 from lib import auth
 from lib import chatgpt
 from lib import cli
@@ -25,6 +27,8 @@ class ChatSession:
         auth.authenticate()
         if system_instruction:
             self._append_system_content(system_instruction)
+        self._system_instruction = system_instruction
+        self._triggers: dict[str, Callable[None, Any]] = {}
 
     def _append_message_to_history(self, new_message: types.Message) -> None:
         """Add a message to the session history."""
@@ -72,12 +76,17 @@ class ChatSession:
     def interact(self) -> bool:
         """Prompt the user for input and print ChatGPT's response.
 
+        If the input is a trigger command, instead calls the triggered action.
+
         Returns:
             True if the user entered any input; otherwise, False.
         """
         user_input = cli.prompt_user()
         if not user_input:
             return False
+        if user_input in self._triggers:
+            self._triggers[user_input]()
+            return True
         self.ask(user_input, with_history=True)
         return True
 
@@ -85,3 +94,11 @@ class ChatSession:
         """Continually interact until the user stops."""
         if self.interact():
             self.loop()
+
+    def clear_history_except_system(self) -> None:
+        """Clear the history for this session, except system messages."""
+        self._message_history = self._get_system_messages()
+
+    def register_command(self, trigger: str, callback: Callable[None, Any]) -> None:
+        """Add a special command which, when sent, calls a callback."""
+        self._triggers[trigger] = callback
