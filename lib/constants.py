@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from . import types
+from lib import types
 
 CHATGPT_MODEL = "gpt-3.5-turbo"
 SECRET_FILENAME = "secret.txt"
