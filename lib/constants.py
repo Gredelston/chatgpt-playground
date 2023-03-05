@@ -3,7 +3,7 @@
 from . import types
 
 CHATGPT_MODEL = "gpt-3.5-turbo"
-SECRET_FILEPATH = "secret.txt"
+SECRET_FILENAME = "secret.txt"
 
 ROLE_USER = types.Role("user")
 ROLE_ASSISTANT = types.Role("assistant")
