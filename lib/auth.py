@@ -11,8 +11,8 @@ from lib import fs
 
 def get_secret_file_abspath() -> str:
     auth_filepath = inspect.stack()[0][1]
-    lib_path = os.path.join(auth_filepath, '..')
-    playground_path = os.path.join(lib_path, '..')
+    lib_path = os.path.join(auth_filepath, "..")
+    playground_path = os.path.join(lib_path, "..")
     secret_filepath = os.path.join(playground_path, constants.SECRET_FILENAME)
     return os.path.abspath(secret_filepath)
 

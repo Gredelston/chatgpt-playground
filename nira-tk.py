@@ -12,8 +12,6 @@ if __name__ == "__main__":
         + "Answer as concisely as possible.\n"
         + f"Current date: {today}"
     )
-    chat_session = session.ChatSession(
-        system_instruction=system_instruction
-    )
+    chat_session = session.ChatSession(system_instruction=system_instruction)
     chat_session.register_command("clear", chat_session.clear_history_except_system)
     tkui.UI(chat_session).run()
